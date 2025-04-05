@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comeback Form</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(115deg, #ff9a9e, #fad0c4);
+            padding: 10px;
+        }
+        .container {
+            max-width: 900px;
+            background: #fff;
+            padding: 25px 40px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        .container .text {
+            text-align: center;
+            font-size: 35px;
+            font-weight: 600;
+            color: #333;
+        }
+        .mandatory-note {
+            text-align: center;
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .input-data {
+            width: calc(50% - 20px);
+            margin: 10px;
+            position: relative;
+        }
+        .input-data input, .input-data select {
+            width: 100%;
+            height: 40px;
+            font-size: 16px;
+            padding: 5px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+        .input-data textarea {
+            width: 100%;
+            height: 80px;
+            font-size: 16px;
+            padding: 5px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+        .submit-btn {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .submit-btn input {
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .full-width {
+            width: calc(100% - 20px);
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            background-color: white;
+            padding: 20px;
+            border: 2px solid #000;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .popup img {
+            max-width: 100000px;
+            display: block;
+            margin: 0 auto 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text">Cumback Form</div>
+        <div class="mandatory-note">* All fields are compulsory</div>
+        <form onsubmit="return validateForm()">
+            <!-- Existing form fields -->
+            <!-- Skipping unchanged parts for brevity -->
+            <div class="form-row">
+                <div class="input-data">
+                    <input type="text" required placeholder="Enter your name">
+                </div>
+                <div class="input-data">
+                    <input type="email" required placeholder="Enter your email">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="input-data">
+                    <input type="text" id="phone" required placeholder="Enter phone number">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="input-data">
+                    <input type="number" id="age" required placeholder="Enter your Age" min="0">
+                </div>
+                <div class="input-data">
+                    <input type="text" id="city" required placeholder="Enter your City">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="input-data">
+                    <select id="gender" required>
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="transgender">Transgender</option>
+                        <option value="non-binary">Non-Binary</option>
+                        <option value="genderqueer">Genderqueer</option>
+                        <option value="agender">Agender</option>
+                        <option value="gay">Gay</option>
+                        <option value="lesbian">Lesbian</option>
+                        <option value="trans-man">Trans Man</option>
+                        <option value="trans-woman">Trans Woman</option>
+                        <option value="transformer">Transformer</option>
+                        <option value="wallmart-bag">Wallmart Bag</option>
+                        <option value="hizruboi">Hizruboi</option>
+                        <option value="snapchat-gay">Snapchat Gay</option>
+                        <option value="prefer-not-to-say">Prefer not to say</option>
+                    </select>
+                </div>
+                <div class="input-data">
+                    <input type="text" id="reason" required placeholder="Reason for comeback">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="input-data">
+                    <input type="text" id="last-studied" required placeholder="Last studied (e.g., 2022)">
+                </div>
+                <div class="input-data">
+                    <select id="education" required onchange="toggleFields()">
+                        <option value="">Select Education Level</option>
+                        <option value="school">School</option>
+                        <option value="college">College/University</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row" id="school-fields" style="display: none; flex-wrap: wrap; gap: 1rem;">
+                <div class="input-data">
+                    <input type="text" id="school-name" placeholder="Enter School Name">
+                </div>
+                <div class="input-data">
+                    <input type="text" id="class" placeholder="Enter Class (e.g., 10th, 12th)">
+                </div>
+            </div>
+            <div class="form-row" id="college-fields" style="display: none; flex-wrap: wrap; gap: 1rem;">
+                <div class="input-data">
+                    <input type="text" id="college-name" placeholder="Enter College/University Name">
+                </div>
+                <div class="input-data">
+                    <select id="course" onchange="showBranchField()">
+                        <option value="">Select Course</option>
+                        <option value="BTech">BTech</option>
+                        <option value="MBBS">MBBS</option>
+                        <option value="BCom">BCom</option>
+                        <option value="BEd">BEd</option>
+                        <option value="BA">BA</option>
+                        <option value="BSc">BSc</option>
+                        <option value="LLB">LLB</option>
+                        <option value="BBA">BBA</option>
+                        <option value="BCA">BCA</option>
+                        <option value="BPharma">BPharma</option>
+                    </select>
+                </div>
+                <div class="input-data" id="branch-field" style="display: none;">
+                    <input type="text" id="branch" placeholder="Enter your branch/subject">
+                </div>
+                <div class="input-data">
+                    <input type="number" id="semester" placeholder="Enter semester">
+                </div>
+                <div class="input-data">
+                    <input type="number" id="year" placeholder="Enter year" onchange="updateSemesters()">
+                </div>
+                <div class="input-data">
+                    <select id="backlog" onchange="toggleBacklogInput()">
+                        <option value="">Do you have any backlogs?</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+                <div class="input-data" id="backlog-count-field" style="display: none;">
+                    <input type="number" id="backlog-count" placeholder="Number of backlogs">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="input-data">
+                    <label for="rating">कितना चुद रखे है आप?</label>
+                    <select id="rating" required onchange="checkRating()">
+                        <option value="">Rate from 0 to 10</option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="input-data">
+                    <select id="whatsapp-updates" required onchange="toggleWhatsappInput()">
+                        <option value="">Do you want to receive updates via WhatsApp?</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+                <div class="input-data" id="whatsapp-number-field" style="display: none;">
+                    <input type="text" id="whatsapp-number" placeholder="Enter WhatsApp number">
+                </div>
+            </div>
+            <div class="submit-btn">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+
+    <!-- Popup container -->
+    <div id="popup" class="popup">
+        <img id="popup-image" src="" alt="Popup Image">
+        <div id="popup-message">Form submitted successfully!</div>
+    </div>
+
+    <script>
+        function toggleFields() {
+            let education = document.getElementById('education').value;
+            document.getElementById('college-fields').style.display = (education === 'college') ? 'flex' : 'none';
+            document.getElementById('school-fields').style.display = (education === 'school') ? 'flex' : 'none';
+        }
+
+        function showBranchField() {
+            let course = document.getElementById('course').value;
+            document.getElementById('branch-field').style.display = course ? 'block' : 'none';
+        }
+
+        function updateSemesters() {
+            let year = parseInt(document.getElementById('year').value);
+            let semester = parseInt(document.getElementById('semester').value);
+            if (semester !== year * 2 - 1 && semester !== year * 2) {
+                alertWithImage('Semester mismatch! Sahi se dekh le semester sahi nahi hai', './img4.jpg');
+            }
+        }
+
+        function validateForm() {
+            let phone = document.getElementById('phone').value;
+            if (phone.length !== 10 || isNaN(phone)) {
+                alertWithImage('Phone number 10 digit ka hoga, sahi kar wapas.', './img2.jpg');
+                return false;
+            }
+            showPopup('Form toh jama ho gaya par main kuch nahi kar sakta', './img6.jpg');
+            return false;
+        }
+
+        function toggleBacklogInput() {
+            let backlog = document.getElementById('backlog').value;
+            document.getElementById('backlog-count-field').style.display = (backlog === 'yes') ? 'block' : 'none';
+        }
+
+        function checkRating() {
+            let rating = parseInt(document.getElementById('rating').value);
+            if (rating >= 7) {
+                alertWithImage('Comeback bhool ja, Ab toh upar wala hi tujhe bacha sakta hai', 'https://i.imgflip.com/9eg2ej.jpg');
+            } else if (rating >= 4 && rating <= 6) {
+                alertWithImage('50-50 hai mamla bhai', './img3.jpg');
+            } else if (rating>= 0 && rating<=3) {
+                alertWithImage('Kitaabi dalla', './img5.jpg');
+            }
+        }
+
+        function alertWithImage(message, imageUrl) {
+            const popup = document.getElementById('popup');
+            document.getElementById('popup-message').innerText = message;
+            document.getElementById('popup-image').src = imageUrl;
+            popup.style.display = 'block';
+            setTimeout(() => popup.style.display = 'none', 5000);
+        }
+
+        function showPopup(message, imageUrl) {
+            const popup = document.getElementById('popup');
+            document.getElementById('popup-message').innerText = message;
+            document.getElementById('popup-image').src = imageUrl;
+            popup.style.display = 'block';
+            setTimeout(() => popup.style.display = 'none', 3000);
+        }
+
+        function toggleWhatsappInput() {
+            const selection = document.getElementById('whatsapp-updates').value;
+            const whatsappField = document.getElementById('whatsapp-number-field');
+            whatsappField.style.display = (selection === 'yes') ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>
