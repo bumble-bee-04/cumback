@@ -6,6 +6,19 @@
     <title>Comeback Form</title>
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap" rel="stylesheet">
     <style>
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+            }
+
+            .input-data {
+                width: 100%;
+                margin: 10px 0;
+            }
+            .container {
+                padding: 20px;
+            }
+        }
         * {
             margin: 0;
             padding: 0;
@@ -48,6 +61,8 @@
             width: calc(50% - 20px);
             margin: 10px;
             position: relative;
+            min-width: 200px;
+            flex: 1 1 45%;
         }
         .input-data input, .input-data select {
             width: 100%;
