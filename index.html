@@ -180,6 +180,7 @@
                         <option value="">Select Education Level</option>
                         <option value="school">School</option>
                         <option value="college">College/University</option>
+                        <option value="competitive">Preparing for Competitive Exams</option>
                     </select>
                 </div>
             </div>
@@ -230,6 +231,15 @@
                     <input type="number" id="backlog-count" placeholder="Number of backlogs">
                 </div>
             </div>
+            <div class="form-row" id="competitive-fields" style="display: none; flex-wrap: wrap; gap: 1rem;">
+                <div class="input-data">
+                    <select id="exam-type">
+                        <option value="">Select Exam</option>
+                        <option value="JEE">JEE</option>
+                        <option value="NEET">NEET</option>
+                    </select>
+                </div>
+            </div>
             <div class="form-row">
                 <div class="input-data">
                     <label for="rating">कितना चुद रखे है आप?</label>
@@ -278,6 +288,7 @@
             let education = document.getElementById('education').value;
             document.getElementById('college-fields').style.display = (education === 'college') ? 'flex' : 'none';
             document.getElementById('school-fields').style.display = (education === 'school') ? 'flex' : 'none';
+            document.getElementById('competitive-fields').style.display = (education === 'competitive') ? 'flex' : 'none';
         }
 
         function showBranchField() {
